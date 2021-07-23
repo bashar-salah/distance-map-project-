@@ -7,7 +7,6 @@ from.models import map
 from django.http import HttpResponse
 # Create your views here.
 def  bashar_map (requset) :
-    # distance = 99
     try:
         location = Nominatim(user_agent='map')
         model=map()
@@ -25,11 +24,7 @@ def  bashar_map (requset) :
             lat = new.latitude
             lon = new.longitude
             model.myplace=my
-            # city = new.city
-            # inf = get_geo(scraping())
-            # country,city,lat,lon =inf
             point_a = [lat,lon]
-            # if requset.method == 'POST' :
             des = requset.POST.get('destination', False)
             a = location.geocode(des)
             point_b = [a.latitude,a.longitude]
@@ -45,19 +40,6 @@ def  bashar_map (requset) :
             folium.Marker([a.latitude,a.longitude],popup=des).add_to(m)
             line = folium.PolyLine(locations=[point_a,point_b],wight=10,color='red',popup=str(distance)+'km',tooltip=str(distance)+'km')
             m.add_child(line)
-            # folium.Marker([lat, lon], popup='bashar').add_to(m)
-
-        # print(a.longitude)
-        # print(a.latitude)
-        # country, city, lat, lon
-
-        # m.add_child(folium.LatLngPopup())
-        # scraping()
-        # print(inf)
-        # if requset.POST.get('speed', False) is not None :
-        #     speed = requset.POST.get['speed', False]
-        # else :
-        #
 
 
         m=m._repr_html_()
